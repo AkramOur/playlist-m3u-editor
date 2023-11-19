@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QFileDialog, QListWidgetItem, QMessageBox
-from PyQt5.QtCore import QDir, QFileInfo, Qt, QTimer, QUrl, QTime, QCoreApplication
+from PyQt5.QtCore import QDir, QFileInfo, Qt, QTimer, QUrl, QTime, QCoreApplication, QThread, pyqtSignal
 
 from ui.pages.create_playlist_ui import Ui_Form
 
@@ -8,6 +8,21 @@ import os
 import shutil
 
 from moviepy.editor import AudioFileClip
+
+from . import download
+
+
+class DownloadThread(QThread):
+    finished = pyqtSignal()
+
+    def __init__(self, url, folder_path):
+        super().__init__()
+        self.url = url
+        self.folder_path = folder_path
+
+    def run(self):
+        download.download_playlist_youtube(self.url, self.folder_path)
+        self.finished.emit()
 
 
 def load_items(folder_path,view_list_items):
@@ -18,8 +33,7 @@ def load_items(folder_path,view_list_items):
 
     if folder_dialog.exec_():
         # Get the selected folder
-        selected_folder = folder_dialog.selectedFiles()[0]
-        folder_path = selected_folder
+        folder_path = folder_dialog.selectedFiles()[0]
         # Clear the current items in the view list
         view_list_items.clear()
 
@@ -204,3 +218,38 @@ def get_media_duration(file_path):
     duration_in_seconds = audio_clip.duration
 
     return int(duration_in_seconds)
+
+
+def load_items_youtube(folder_path,view_list_items,url_playlist,progressBar):
+    url = url_playlist.text()
+    if url is None or not url.startswith("https://www.youtube.com/watch?"):
+        showError("Please enter a valid URL playlist")
+        return folder_path, view_list_items
+    progressBar.setVisible(True)
+    # Open a file dialog to allow the user to select a folder
+    folder_dialog = QFileDialog()
+    folder_dialog.setFileMode(QFileDialog.Directory)
+    folder_dialog.setOption(QFileDialog.ShowDirsOnly)
+
+    if folder_dialog.exec_():
+        # Get the selected folder
+        folder_path = folder_dialog.selectedFiles()[0]
+        # Clear the current items in the view list
+        view_list_items.clear()
+
+        # Create and start the download thread
+        download_thread = DownloadThread(url, folder_path)
+        download_thread.finished.connect(progressBar.hide)
+        download_thread.start()
+
+        # Update the progress bar while the thread is running
+        while download_thread.isRunning():
+            QCoreApplication.processEvents()
+
+        # Add the elements of the selected folder to the view list
+        for file_name in os.listdir(folder_path):
+            # Create a QListWidgetItem and add it to the QListView
+            list_item = QListWidgetItem(file_name)
+            view_list_items.addItem(list_item)
+
+    return folder_path, view_list_items

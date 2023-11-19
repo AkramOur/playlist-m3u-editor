@@ -4,6 +4,7 @@ from ui.main_window_ui import Ui_MainWindow
 
 from pages_functions.createPlaylist import CreatePlaylist
 from pages_functions.editPlaylist import EditPlaylist
+from pages_functions.youtubeToM3u import YoutubeToM3u
 
 
 class MyWindow(QMainWindow):
@@ -17,7 +18,7 @@ class MyWindow(QMainWindow):
         ## =======================================================================================================
         self.create_playlist_btn = self.ui.pushButton
         self.edit_playlist_btn= self.ui.pushButton_2
-       
+        self.youtube_to_m3u_btn= self.ui.pushButton_3
 
         ## =======================================================================================================
         ## Create dict for menu buttons and tab windows
@@ -25,7 +26,7 @@ class MyWindow(QMainWindow):
         self.menu_btns_list = {
             self.create_playlist_btn: CreatePlaylist(),
             self.edit_playlist_btn: EditPlaylist(),
-           
+            self.youtube_to_m3u_btn: YoutubeToM3u(),
         }
 
         ## =======================================================================================================
@@ -40,6 +41,7 @@ class MyWindow(QMainWindow):
 
         self.create_playlist_btn.clicked.connect(self.show_selected_window)
         self.edit_playlist_btn.clicked.connect(self.show_selected_window)
+        self.youtube_to_m3u_btn.clicked.connect(self.show_selected_window)
         
 
     def show_home_window(self):
