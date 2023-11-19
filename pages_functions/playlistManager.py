@@ -54,7 +54,7 @@ def add_items(folder_path,view_list_items):
 
     # Open a file dialog to allow the user to select MP3 files
     file_dialog = QFileDialog()
-    file_dialog.setNameFilter("MP3 files (*.mp3)")
+    file_dialog.setNameFilter("MP3 files (*.mp3 *.flac)")
     file_dialog.setFileMode(QFileDialog.ExistingFiles)
 
     if file_dialog.exec_():
