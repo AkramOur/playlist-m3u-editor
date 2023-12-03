@@ -38,7 +38,7 @@ def load_items(folder_path,view_list_items):
         view_list_items.clear()
 
         # Add the elements of the selected folder to the view list
-        for file_name in os.listdir(selected_folder):
+        for file_name in os.listdir(folder_path):
             # Create a QListWidgetItem and add it to the QListView
             list_item = QListWidgetItem(file_name)
             view_list_items.addItem(list_item)
@@ -250,6 +250,41 @@ def load_items_youtube(folder_path,view_list_items,url_playlist,progressBar):
         for file_name in os.listdir(folder_path):
             # Create a QListWidgetItem and add it to the QListView
             list_item = QListWidgetItem(file_name)
+            view_list_items.addItem(list_item)
+
+    return folder_path, view_list_items
+
+
+def download_item_mp3(folder_path,view_list_items,url_playlist,progressBar):
+    url = url_playlist.text()
+    if url is None or not url.startswith("https://www.youtube.com/watch?"):
+        showError("Please enter a valid URL video")
+        return folder_path, view_list_items
+    progressBar.setVisible(True)
+    # Open a file dialog to allow the user to select a folder
+    folder_dialog = QFileDialog()
+    folder_dialog.setFileMode(QFileDialog.Directory)
+    folder_dialog.setOption(QFileDialog.ShowDirsOnly)
+
+    if folder_dialog.exec_():
+        # Get the selected folder
+        folder_path = folder_dialog.selectedFiles()[0]
+        # Clear the current items in the view list
+        view_list_items.clear()
+
+        # Create and start the download thread
+        download_thread = DownloadThread(url, folder_path)
+        download_thread.finished.connect(progressBar.hide)
+        download_thread.start()
+
+        # Update the progress bar while the thread is running
+        while download_thread.isRunning():
+            QCoreApplication.processEvents()
+
+        # Add the elements of the selected folder to the view list
+        for file_name in os.listdir(folder_path):
+            # Create a QListWidgetItem and add it to the QListView
+            list_item = QListWidgetItem(file_name+' Downloaded !')
             view_list_items.addItem(list_item)
 
     return folder_path, view_list_items
