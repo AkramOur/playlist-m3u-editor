@@ -124,7 +124,7 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>142</width>
+             <width>167</width>
              <height>592</height>
             </rect>
            </property>
@@ -320,147 +320,6 @@ border: none;</string>
              </property>
             </spacer>
            </item>
-           <item>
-            <widget class="QFrame" name="search_frame">
-             <property name="minimumSize">
-              <size>
-               <width>300</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>300</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">#search_frame {
-	border:  1px solid #aa7e6f;
-	border-radius: 15px;
-	background-color: rgb(255, 255, 255);
-}
-
-#search_btn {
-	padding:5px 5px;
-	border-radius: 15px;
-}
-
-#search_btn:pressed {
-	padding-left: 10px;
-}</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::Box</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_10">
-              <property name="leftMargin">
-               <number>15</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>5</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLineEdit" name="lineEdit_5">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="frame">
-                 <bool>false</bool>
-                </property>
-                <property name="placeholderText">
-                 <string>Search Something...</string>
-                </property>
-                <property name="clearButtonEnabled">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="search_btn">
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="../static/resource.qrc">
-                  <normaloff>:/icon/icon/search-3-48.ico</normaloff>:/icon/icon/search-3-48.ico</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>20</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>209</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QLabel" name="user_label">
-             <property name="minimumSize">
-              <size>
-               <width>30</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>30</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">#user_label {
-	background-color: #fff;
-	border: 1px solid #F2F4F4;
-	padding: 5px 5px;
-	border-radius: 15%;
-}</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../static/resource.qrc">:/icon/icon/user-48.ico</pixmap>
-             </property>
-             <property name="scaledContents">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </item>
@@ -510,6 +369,7 @@ QTabBar::close-button:hover {
  <resources>
   <include location="../static/resource.qrc"/>
   <include location="../static/resource.qrc"/>
+  <include location="../../../../.designer/static/resource.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -77,7 +77,7 @@ class Ui_MainWindow(object):
 "")
         self.toolBox.setObjectName("toolBox")
         self.general_page = QtWidgets.QWidget()
-        self.general_page.setGeometry(QtCore.QRect(0, 0, 142, 592))
+        self.general_page.setGeometry(QtCore.QRect(0, 0, 167, 592))
         self.general_page.setObjectName("general_page")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.general_page)
         self.verticalLayout.setContentsMargins(5, 0, 5, 5)
@@ -149,66 +149,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.pushButton_8)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
-        self.search_frame = QtWidgets.QFrame(self.search_widget)
-        self.search_frame.setMinimumSize(QtCore.QSize(300, 30))
-        self.search_frame.setMaximumSize(QtCore.QSize(300, 30))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.search_frame.setFont(font)
-        self.search_frame.setStyleSheet("#search_frame {\n"
-"    border:  1px solid #aa7e6f;\n"
-"    border-radius: 15px;\n"
-"    background-color: rgb(255, 255, 255);\n"
-"}\n"
-"\n"
-"#search_btn {\n"
-"    padding:5px 5px;\n"
-"    border-radius: 15px;\n"
-"}\n"
-"\n"
-"#search_btn:pressed {\n"
-"    padding-left: 10px;\n"
-"}")
-        self.search_frame.setFrameShape(QtWidgets.QFrame.Box)
-        self.search_frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.search_frame.setObjectName("search_frame")
-        self.horizontalLayout_10 = QtWidgets.QHBoxLayout(self.search_frame)
-        self.horizontalLayout_10.setContentsMargins(15, 0, 5, 0)
-        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
-        self.lineEdit_5 = QtWidgets.QLineEdit(self.search_frame)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.lineEdit_5.setFont(font)
-        self.lineEdit_5.setFrame(False)
-        self.lineEdit_5.setClearButtonEnabled(True)
-        self.lineEdit_5.setObjectName("lineEdit_5")
-        self.horizontalLayout_10.addWidget(self.lineEdit_5)
-        self.search_btn = QtWidgets.QPushButton(self.search_frame)
-        self.search_btn.setStyleSheet("")
-        self.search_btn.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icon/icon/search-3-48.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.search_btn.setIcon(icon2)
-        self.search_btn.setIconSize(QtCore.QSize(20, 20))
-        self.search_btn.setObjectName("search_btn")
-        self.horizontalLayout_10.addWidget(self.search_btn)
-        self.horizontalLayout.addWidget(self.search_frame)
-        spacerItem2 = QtWidgets.QSpacerItem(209, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem2)
-        self.user_label = QtWidgets.QLabel(self.search_widget)
-        self.user_label.setMinimumSize(QtCore.QSize(30, 30))
-        self.user_label.setMaximumSize(QtCore.QSize(30, 30))
-        self.user_label.setStyleSheet("#user_label {\n"
-"    background-color: #fff;\n"
-"    border: 1px solid #F2F4F4;\n"
-"    padding: 5px 5px;\n"
-"    border-radius: 15%;\n"
-"}")
-        self.user_label.setText("")
-        self.user_label.setPixmap(QtGui.QPixmap(":/icon/icon/user-48.ico"))
-        self.user_label.setScaledContents(True)
-        self.user_label.setObjectName("user_label")
-        self.horizontalLayout.addWidget(self.user_label)
         self.gridLayout_4.addWidget(self.search_widget, 0, 0, 1, 1)
         self.tabWidget = QtWidgets.QTabWidget(self.main_widget)
         font = QtGui.QFont()
@@ -243,13 +183,12 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Playlist m3u editor"))
         self.pushButton.setText(_translate("MainWindow", "create playlist"))
         self.pushButton_2.setText(_translate("MainWindow", "edit playlist"))
         self.pushButton_3.setText(_translate("MainWindow", "youtube to m3u"))
         self.pushButton_4.setText(_translate("MainWindow", "youtube mp3 "))
         self.toolBox.setItemText(self.toolBox.indexOf(self.general_page), _translate("MainWindow", "General"))
-        self.lineEdit_5.setPlaceholderText(_translate("MainWindow", "Search Something..."))
 from . import resource_rc
 
 
