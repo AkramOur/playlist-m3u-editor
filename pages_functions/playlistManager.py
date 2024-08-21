@@ -60,11 +60,12 @@ def add_items(folder_path,view_list_items):
     if file_dialog.exec_():
         # Get the list of selected files
         selected_files = file_dialog.selectedFiles()
-
         # Copy the selected MP3 files to the folder_path
         for selected_file in selected_files:
             destination_path = os.path.join(folder_path, os.path.basename(selected_file))
-            shutil.copyfile(selected_file, destination_path)
+            #if the file already exists in the directory
+            if folder_path != os.path.dirname(selected_file):
+                shutil.copyfile(selected_file, destination_path)
 
             # Create a QListWidgetItem and add it to the QListView
             list_item = QListWidgetItem(os.path.basename(destination_path))
@@ -119,6 +120,13 @@ def showSuccess(message):
     success_dialog.setText(message)
     success_dialog.exec_()
 
+def showWarning(message):
+    success_dialog = QMessageBox()
+    success_dialog.setIcon(QMessageBox.Warning)
+    success_dialog.setWindowTitle("Warning")
+    success_dialog.setText(message)
+    success_dialog.exec_()
+
 
 
 def play_music(folder_path,view_list_items,media_player,music_playing):
@@ -129,7 +137,7 @@ def play_music(folder_path,view_list_items,media_player,music_playing):
 
         # Construct the full path to the selected MP3 file
         selected_file_path = os.path.join(folder_path, selected_item_text)
-
+        print('selected_file_path' ,selected_file_path)
         # Stop any currently playing music
         stop_music(music_playing,media_player)
 
@@ -211,6 +219,7 @@ def save_playlist(folder_path,view_list_items):
         showSuccess("Playlist saved successfully.")
 
 def get_media_duration(file_path):
+    
     # Load the audio file
     audio_clip = AudioFileClip(file_path)
 
@@ -288,3 +297,58 @@ def download_item_mp3(folder_path,view_list_items,url_playlist,progressBar):
             view_list_items.addItem(list_item)
 
     return folder_path, view_list_items
+
+def load_playlist(playlist_Path,view_list_items):
+
+    # Open a file dialog to get the file name and location for the playlist
+    file_dialog = QFileDialog()
+    file_dialog.setAcceptMode(QFileDialog.AcceptOpen)
+    file_dialog.setNameFilter("M3U Playlist (*.m3u)")
+
+    if file_dialog.exec_():
+        # Get the selected folder
+        playlist_Path = file_dialog.selectedFiles()[0]
+        # Clear the current items in the view list
+        view_list_items.clear()
+
+        with open(playlist_Path, 'r', encoding='utf-8') as playlist_file:
+            for line in playlist_file:
+                # Skip lines that start with '#', as they contain metadata
+                if not line.startswith("#"):
+                    file = os.path.basename(line.strip())
+                    if not os.path.exists(os.path.dirname(playlist_Path) + "/" + file):
+                        showWarning("The file " + file + " not exist!")
+                        continue
+                    # Strip any extra whitespace/newlines and add the path to the list
+                    # Create a QListWidgetItem and add it to the QListView
+                    list_item = QListWidgetItem(file)
+                    view_list_items.addItem(list_item)
+    
+    return playlist_Path, view_list_items
+
+def update_playlist(playlist_Path, view_list_items):
+    if not playlist_Path:
+        # Show an error message if folder_path is not set
+        showError("Please load the playlist before updating.")
+        return
+
+    # Open the playlist file in write mode
+    with open(playlist_Path, 'w', encoding='utf-8') as playlist_file:
+        # Write the header information to the playlist file
+        playlist_file.write("#EXTM3U\n")
+        # Iterate through the items in the view list and write each path and duration to the playlist file
+        for row in range(view_list_items.count()):
+            item = view_list_items.item(row)
+            item_text = item.text()
+            item_path = os.path.dirname(playlist_Path) + "/" + item_text
+            # verify if th file exist
+            if not os.path.exists(item_path):
+                continue
+            # Get the duration of the media item
+            duration = get_media_duration(item_path)
+            # Write the path and duration to the playlist file
+            playlist_file.write(f"#EXTINF:{duration},{item_text}\n")
+            playlist_file.write(f"{item_text}\n")
+
+    # Show a success message
+    showSuccess("Playlist saved successfully.")
